@@ -368,3 +368,4 @@ if __name__ == "__main__":
     print("\n" + "=" * 60)
     print("Model rebuilding completed successfully!")
     print("Models are now ready for Flask integration.")
+
