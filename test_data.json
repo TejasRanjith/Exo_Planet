@@ -1,0 +1,156 @@
+{
+  "kepler_test_cases": [
+    {
+      "name": "Earth-like Planet (Kepler-452b)",
+      "description": "Similar to Earth, potentially habitable",
+      "data": {
+        "orbital_period": 384.8,
+        "transit_duration": 12.5,
+        "transit_depth": 0.0008,
+        "planet_radius": 1.63,
+        "equilibrium_temp": 265,
+        "insolation_flux": 1.1,
+        "stellar_temp": 5753,
+        "stellar_radius": 1.11,
+        "stellar_gravity": 4.32,
+        "kepler_magnitude": 13.4
+      },
+      "expected": "CONFIRMED"
+    },
+    {
+      "name": "Hot Jupiter (Kepler-1b)",
+      "description": "Large gas giant in close orbit",
+      "data": {
+        "orbital_period": 3.5,
+        "transit_duration": 2.5,
+        "transit_depth": 0.02,
+        "planet_radius": 12.0,
+        "equilibrium_temp": 1200,
+        "insolation_flux": 1000,
+        "stellar_temp": 5850,
+        "stellar_radius": 1.0,
+        "stellar_gravity": 4.44,
+        "kepler_magnitude": 11.3
+      },
+      "expected": "CONFIRMED"
+    },
+    {
+      "name": "False Positive Candidate",
+      "description": "Likely a false positive due to stellar activity",
+      "data": {
+        "orbital_period": 15.2,
+        "transit_duration": 8.0,
+        "transit_depth": 0.0001,
+        "planet_radius": 0.8,
+        "equilibrium_temp": 400,
+        "insolation_flux": 2.5,
+        "stellar_temp": 4500,
+        "stellar_radius": 0.7,
+        "stellar_gravity": 4.6,
+        "kepler_magnitude": 14.2
+      },
+      "expected": "FALSE POSITIVE"
+    }
+  ],
+  "k2_test_cases": [
+    {
+      "name": "Confirmed K2 Planet",
+      "description": "Typical confirmed K2 exoplanet",
+      "data": {
+        "orbital_period": 4.5,
+        "transit_duration": 3.2,
+        "transit_depth": 0.001,
+        "planet_radius": 1.2,
+        "equilibrium_temp": 350,
+        "insolation_flux": 1.5,
+        "stellar_temp": 5200,
+        "stellar_radius": 0.9,
+        "stellar_gravity": 4.4,
+        "planet_mass": 1.5,
+        "stellar_mass": 0.95,
+        "stellar_distance": 150.0,
+        "disc_facility": "K2"
+      },
+      "expected": "CONFIRMED"
+    },
+    {
+      "name": "K2 Candidate",
+      "description": "Unconfirmed K2 candidate",
+      "data": {
+        "orbital_period": 12.8,
+        "transit_duration": 6.5,
+        "transit_depth": 0.0005,
+        "planet_radius": 0.9,
+        "equilibrium_temp": 280,
+        "insolation_flux": 0.8,
+        "stellar_temp": 4800,
+        "stellar_radius": 0.8,
+        "stellar_gravity": 4.5,
+        "planet_mass": 0.8,
+        "stellar_mass": 0.85,
+        "stellar_distance": 200.0,
+        "disc_facility": "K2"
+      },
+      "expected": "CANDIDATE"
+    }
+  ],
+  "tess_test_cases": [
+    {
+      "name": "TESS Confirmed Planet",
+      "description": "Typical TESS confirmed exoplanet",
+      "data": {
+        "orbital_period": 8.2,
+        "transit_duration": 4.1,
+        "transit_depth": 0.002,
+        "planet_radius": 2.1,
+        "equilibrium_temp": 420,
+        "insolation_flux": 2.0,
+        "stellar_temp": 5500,
+        "stellar_radius": 1.05,
+        "stellar_gravity": 4.35,
+        "stellar_tmag": 11.5,
+        "transit_midpoint": 2458000.0,
+        "stellar_distance": 120.0
+      },
+      "expected": "CONFIRMED"
+    },
+    {
+      "name": "TESS False Positive",
+      "description": "TESS false positive due to stellar variability",
+      "data": {
+        "orbital_period": 25.6,
+        "transit_duration": 12.0,
+        "transit_depth": 0.0003,
+        "planet_radius": 0.7,
+        "equilibrium_temp": 300,
+        "insolation_flux": 0.5,
+        "stellar_temp": 4200,
+        "stellar_radius": 0.6,
+        "stellar_gravity": 4.7,
+        "stellar_tmag": 13.8,
+        "transit_midpoint": 2458200.0,
+        "stellar_distance": 300.0
+      },
+      "expected": "FP"
+    },
+    {
+      "name": "TESS Candidate",
+      "description": "TESS planet candidate requiring follow-up",
+      "data": {
+        "orbital_period": 15.3,
+        "transit_duration": 7.8,
+        "transit_depth": 0.0015,
+        "planet_radius": 1.4,
+        "equilibrium_temp": 380,
+        "insolation_flux": 1.2,
+        "stellar_temp": 5000,
+        "stellar_radius": 0.95,
+        "stellar_gravity": 4.4,
+        "stellar_tmag": 12.2,
+        "transit_midpoint": 2458100.0,
+        "stellar_distance": 180.0
+      },
+      "expected": "PC"
+    }
+  ]
+}

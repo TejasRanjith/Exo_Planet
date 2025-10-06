@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}ExoSeek - Cute Solar System{% endblock %}
+
+{% block content %}
+  <!-- 🌌 HEADER -->
+  <header class="site-header">
+    <h1 class="main-heading">exoseek</h1>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="#" id="home-btn">Home</a></li>
+        <li><a href="{{ url_for('find_exoplanets') }}">Find Exoplanet</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 🌍 MAIN CONTAINER -->
+  <div class="main-container">
+    
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1 class="main-title">EXOSEEK</h1>
+      <p class="main-tagline">Explore the infinite.</p>
+      
+      <!-- Statistics Section -->
+      <div class="statistics-section">
+        <div class="stat-card">
+          <div class="stat-number">6,022</div>
+          <div class="stat-label">Confirmed Planets →</div>
+          <div class="stat-date">10/02/2025</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">701</div>
+          <div class="stat-label">TESS Confirmed Planets →</div>
+          <div class="stat-date">10/02/2025</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">7,703</div>
+          <div class="stat-label">TESS Project Candidates →</div>
+          <div class="stat-date">09/28/2025</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Solar System -->
+    <div class="solar-system">
+      <!-- Sun -->
+      <div class="sun"></div>
+      
+      <!-- Planet Orbits -->
+      <div class="orbit orbit1">
+        <div class="planet mercury"></div>
+      </div>
+      <div class="orbit orbit2">
+        <div class="planet venus"></div>
+      </div>
+      <div class="orbit orbit3">
+        <div class="planet earth"></div>
+      </div>
+      <div class="orbit orbit4">
+        <div class="planet mars"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🌟 EXOPLANET INFO POPUP -->
+  <div id="exoplanet-popup" class="popup-overlay hidden">
+    <div class="popup-content">
+      <button class="back-btn" id="back-btn">← Back</button>
+      
+      <div class="popup-header">
+        <h2>What are Exoplanets?</h2>
+        <div class="animated-planets">
+          <div class="exoplanet exoplanet1"></div>
+          <div class="exoplanet exoplanet2"></div>
+          <div class="exoplanet exoplanet3"></div>
+        </div>
+      </div>
+      
+      <div class="popup-body">
+        <p>
+          Exoplanets, or planets that orbit stars outside our own solar system, have become one of the most fascinating frontiers of modern astronomy. With the launch of space missions like Kepler, K2, and TESS, astronomers have uncovered thousands of planetary candidates and confirmed exoplanets.
+        </p>
+        
+        <div class="info-section">
+          <h3>🌍 Discovery Methods</h3>
+          <p>Many exoplanets were initially identified by analyzing dips in starlight when a planet passes in front of its host star. This technique, called the transit method, has proven remarkably effective for detecting distant worlds.</p>
+        </div>
+        
+        <div class="info-section">
+          <h3>🤖 AI & Machine Learning</h3>
+          <p>As data collection has grown enormously, artificial intelligence and machine learning are transforming the field. By training models on NASA datasets, researchers can automatically classify potential exoplanets with high accuracy.</p>
+        </div>
+        
+        <div class="info-section">
+          <h3>🔍 The Big Question</h3>
+          <p>By combining astronomical insights with computational power, we are moving closer to answering one of humanity's oldest questions: are we alone in the universe, or are there countless other worlds waiting to be found?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+{% endblock %}

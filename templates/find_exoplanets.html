@@ -1,0 +1,678 @@
+{% extends "base.html" %}
+
+{% block title %}Find Exoplanets - ExoSeek{% endblock %}
+
+{% block content %}
+  <!-- HEADER -->
+  <header class="site-header">
+    <h1 class="main-heading">ExoSeek</h1>
+    <nav class="nav-menu">
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('find_exoplanets') }}" class="active">Find Exoplanet</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Close Button -->
+  <div class="close-button-container">
+    <button class="close-btn" onclick="window.location.href='{{ url_for('home') }}'">&times;</button>
+  </div>
+
+  <!-- 🌍 MAIN CONTAINER -->
+  <div class="main-container">
+    
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1 class="main-title">FIND EXOPLANETS</h1>
+      <p class="main-tagline">Discover new worlds.</p>
+      
+      <!-- Exoplanet Finder Section -->
+      <div class="finder-section">
+        <p class="finder-description">
+          Welcome to the Exoplanet Finder! Here you can simulate how astronomers detect
+          new worlds by entering some simple details. Try different values to see
+          whether your input could represent a real exoplanet.
+        </p>
+
+        <form class="finder-form" id="exoplanet-form">
+          <!-- Model Selection -->
+          <div class="form-group">
+            <label>Select Mission Model:</label>
+            <select name="model_type" id="model-select" required>
+              <option value="kepler">Kepler Mission</option>
+              <option value="k2">K2 Mission</option>
+              <option value="tess">TESS Mission</option>
+            </select>
+          </div>
+
+          <!-- Basic Parameters (Common to all models) -->
+          <div class="form-group">
+            <label>1. Orbital Period - Planet's orbital time around the star (days):</label>
+            <input type="number" name="orbital_period" placeholder="e.g. 365" step="0.01" required>
+          </div>
+
+          <div class="form-group">
+            <label>2. Transit Duration - How long the transit lasts (hours):</label>
+            <input type="number" name="transit_duration" placeholder="e.g. 10" step="0.01" required>
+          </div>
+
+          <div class="form-group">
+            <label>3. Transit Depth - Brightness drop during transit:</label>
+            <input type="number" name="transit_depth" placeholder="e.g. 0.001" step="0.000001" required>
+          </div>
+
+          <div class="form-group">
+            <label>4. Planet Radius - Estimated planet size (Earth radii):</label>
+            <input type="number" name="planet_radius" placeholder="e.g. 1.2" step="0.01" required>
+          </div>
+
+          <div class="form-group">
+            <label>5. Equilibrium Temperature - Surface temperature estimate (K):</label>
+            <input type="number" name="equilibrium_temp" placeholder="e.g. 300" step="0.1" required>
+          </div>
+
+          <div class="form-group">
+            <label>6. Insolation Flux - Amount of stellar radiation received:</label>
+            <input type="number" name="insolation_flux" placeholder="e.g. 1.0" step="0.01" required>
+          </div>
+
+          <div class="form-group">
+            <label>7. Stellar Effective Temperature - Temperature of the host star (K):</label>
+            <input type="number" name="stellar_temp" placeholder="e.g. 5778" step="0.1" required>
+          </div>
+
+          <div class="form-group">
+            <label>8. Stellar Radius - Star size (Solar radii):</label>
+            <input type="number" name="stellar_radius" placeholder="e.g. 1.0" step="0.01" required>
+          </div>
+
+          <div class="form-group">
+            <label>9. Stellar Surface Gravity - Log gravity of the star:</label>
+            <input type="number" name="stellar_gravity" placeholder="e.g. 4.44" step="0.01" required>
+          </div>
+
+          <!-- Additional inputs for different models -->
+          <div class="form-group" id="kepler-magnitude-group">
+            <label>10. Kepler Magnitude - Brightness of the star:</label>
+            <input type="number" name="kepler_magnitude" placeholder="e.g. 12.5" step="0.01">
+          </div>
+
+          <div class="form-group" id="k2-specific" style="display: none;">
+            <label>11. Planet Mass - Planet mass (Earth masses):</label>
+            <input type="number" name="planet_mass" placeholder="e.g. 1.0" step="0.01">
+          </div>
+
+          <div class="form-group" id="k2-specific-2" style="display: none;">
+            <label>12. Stellar Mass - Star mass (Solar masses):</label>
+            <input type="number" name="stellar_mass" placeholder="e.g. 1.0" step="0.01">
+          </div>
+
+          <div class="form-group" id="k2-specific-3" style="display: none;">
+            <label>13. Stellar Distance - Distance to star (parsecs):</label>
+            <input type="number" name="stellar_distance" placeholder="e.g. 100" step="0.1">
+          </div>
+
+          <div class="form-group" id="k2-specific-4" style="display: none;">
+            <label>14. Discovery Facility:</label>
+            <select name="disc_facility">
+              <option value="K2">K2</option>
+              <option value="SuperWASP">SuperWASP</option>
+              <option value="HAT">HAT</option>
+              <option value="WASP">WASP</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="tess-specific" style="display: none;">
+            <label>11. TESS Magnitude - TESS magnitude:</label>
+            <input type="number" name="stellar_tmag" placeholder="e.g. 12.0" step="0.01">
+          </div>
+
+          <div class="form-group" id="tess-specific-2" style="display: none;">
+            <label>12. Transit Midpoint - Transit midpoint (BJD):</label>
+            <input type="number" name="transit_midpoint" placeholder="e.g. 2000.0" step="0.1">
+          </div>
+
+          <div class="form-group" id="tess-specific-3" style="display: none;">
+            <label>13. Stellar Distance - Distance to star (parsecs):</label>
+            <input type="number" name="stellar_distance" placeholder="e.g. 100" step="0.1">
+          </div>
+
+          <button type="submit" class="analyze-btn">
+            <span class="btn-text">Analyze Exoplanet</span>
+            <span class="btn-loading" style="display: none;">
+              <span class="spinner"></span>
+              Analyzing...
+            </span>
+          </button>
+        </form>
+
+        <!-- Results Section -->
+        <div id="results" class="results-section" style="display: none;">
+          <h3>Analysis Results</h3>
+          <div id="analysis-content"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Solar System -->
+    <div class="solar-system">
+      <!-- Sun -->
+      <div class="sun"></div>
+      
+      <!-- Planet Orbits -->
+      <div class="orbit orbit1">
+        <div class="planet mercury"></div>
+      </div>
+      <div class="orbit orbit2">
+        <div class="planet venus"></div>
+      </div>
+      <div class="orbit orbit3">
+        <div class="planet earth"></div>
+      </div>
+      <div class="orbit orbit4">
+        <div class="planet mars"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Model selection handler
+    document.getElementById('model-select').addEventListener('change', function() {
+      const modelType = this.value;
+      
+      // Hide all model-specific groups
+      document.querySelectorAll('[id$="-specific"], [id$="-specific-2"], [id$="-specific-3"], [id$="-specific-4"]').forEach(group => {
+        group.style.display = 'none';
+      });
+      
+      // Show relevant groups based on model
+      if (modelType === 'kepler') {
+        document.getElementById('kepler-magnitude-group').style.display = 'block';
+      } else if (modelType === 'k2') {
+        document.getElementById('k2-specific').style.display = 'block';
+        document.getElementById('k2-specific-2').style.display = 'block';
+        document.getElementById('k2-specific-3').style.display = 'block';
+        document.getElementById('k2-specific-4').style.display = 'block';
+      } else if (modelType === 'tess') {
+        document.getElementById('tess-specific').style.display = 'block';
+        document.getElementById('tess-specific-2').style.display = 'block';
+        document.getElementById('tess-specific-3').style.display = 'block';
+      }
+    });
+
+    // Enhanced form submission handler with Flask API
+    document.getElementById('exoplanet-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const modelType = formData.get('model_type');
+      
+      const data = {
+        model_type: modelType,
+        orbital_period: parseFloat(formData.get('orbital_period')),
+        transit_duration: parseFloat(formData.get('transit_duration')),
+        transit_depth: parseFloat(formData.get('transit_depth')),
+        planet_radius: parseFloat(formData.get('planet_radius')),
+        equilibrium_temp: parseFloat(formData.get('equilibrium_temp')),
+        insolation_flux: parseFloat(formData.get('insolation_flux')),
+        stellar_temp: parseFloat(formData.get('stellar_temp')),
+        stellar_radius: parseFloat(formData.get('stellar_radius')),
+        stellar_gravity: parseFloat(formData.get('stellar_gravity'))
+      };
+      
+      // Add model-specific fields
+      if (modelType === 'kepler') {
+        data.kepler_magnitude = parseFloat(formData.get('kepler_magnitude'));
+      } else if (modelType === 'k2') {
+        data.planet_mass = parseFloat(formData.get('planet_mass')) || 1.0;
+        data.stellar_mass = parseFloat(formData.get('stellar_mass')) || 1.0;
+        data.stellar_distance = parseFloat(formData.get('stellar_distance')) || 100.0;
+        data.disc_facility = formData.get('disc_facility') || 'K2';
+      } else if (modelType === 'tess') {
+        data.stellar_tmag = parseFloat(formData.get('stellar_tmag')) || 12.0;
+        data.transit_midpoint = parseFloat(formData.get('transit_midpoint')) || 2000.0;
+        data.stellar_distance = parseFloat(formData.get('stellar_distance')) || 100.0;
+      }
+      
+      // Validation for required fields
+      const requiredFields = ['orbital_period', 'transit_duration', 'transit_depth', 'planet_radius', 
+                            'equilibrium_temp', 'insolation_flux', 'stellar_temp', 'stellar_radius', 
+                            'stellar_gravity'];
+      
+      for (let field of requiredFields) {
+        if (!data[field] || isNaN(data[field])) {
+          alert(`Please fill in all required fields. Missing or invalid: ${field}`);
+          return;
+        }
+      }
+      
+      try {
+        // Show loading
+        const submitBtn = this.querySelector('.analyze-btn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'flex';
+        submitBtn.disabled = true;
+        
+        // Send to Flask API
+        const response = await fetch('{{ url_for("analyze_exoplanet") }}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          displayResults(result.analysis);
+        } else {
+          alert('Error: ' + result.error);
+        }
+        
+      } catch (error) {
+        alert('Error analyzing exoplanet: ' + error.message);
+      } finally {
+        // Reset button
+        const submitBtn = this.querySelector('.analyze-btn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        
+        btnText.style.display = 'block';
+        btnLoading.style.display = 'none';
+        submitBtn.disabled = false;
+      }
+    });
+    
+    function displayResults(analysis) {
+      const resultsDiv = document.getElementById('results');
+      const contentDiv = document.getElementById('analysis-content');
+      
+      let mlPredictionHtml = '';
+      if (analysis.ml_prediction) {
+        const ml = analysis.ml_prediction;
+        mlPredictionHtml = `
+          <div class="analysis-card ml-prediction">
+            <h4>🤖 ML Prediction</h4>
+            <p><strong>Prediction: ${ml.prediction}</strong></p>
+            <p>Confidence: ${(ml.confidence * 100).toFixed(1)}%</p>
+            ${ml.probabilities ? `
+              <div class="probabilities">
+                <h5>Class Probabilities:</h5>
+                ${Object.entries(ml.probabilities).map(([cls, prob]) => 
+                  `<div class="prob-item">${cls}: ${(prob * 100).toFixed(1)}%</div>`
+                ).join('')}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+      
+      let html = `
+        <div class="analysis-grid">
+          <div class="analysis-card">
+            <h4>${analysis.orbital_period_analysis.icon} Orbital Period</h4>
+            <p><strong>${analysis.orbital_period_analysis.category}</strong></p>
+            <p>${analysis.orbital_period_analysis.description}</p>
+          </div>
+          
+          <div class="analysis-card">
+            <h4>${analysis.size_analysis.icon} Planet Size</h4>
+            <p><strong>${analysis.size_analysis.category}</strong></p>
+            <p>${analysis.size_analysis.description}</p>
+          </div>
+          
+          <div class="analysis-card">
+            <h4>${analysis.transit_analysis.icon} Transit Analysis</h4>
+            <p><strong>${analysis.transit_analysis.category}</strong></p>
+            <p>${analysis.transit_analysis.description}</p>
+          </div>
+          
+          <div class="analysis-card habitability">
+            <h4>🌍 Habitability Score</h4>
+            <div class="score-bar">
+              <div class="score-fill" style="width: ${analysis.habitability_score}%"></div>
+              <span class="score-text">${analysis.habitability_score}/100</span>
+            </div>
+          </div>
+          
+          ${mlPredictionHtml}
+        </div>
+      `;
+      
+      contentDiv.innerHTML = html;
+      resultsDiv.style.display = 'block';
+      resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+
+  <style>
+    /* Center all content on Find Exoplanets page */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 120px 20px 20px 20px; /* Add top padding to account for header */
+    }
+    
+    .main-content {
+      text-align: center;
+      max-width: 800px;
+      width: 100%;
+    }
+    
+    .finder-section {
+      text-align: left;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .finder-form {
+      max-width: 100%;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #FFFFFF;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      outline: none;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      color: #FFFFFF;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group input:focus {
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+    
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      outline: none;
+      font-size: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      color: #FFFFFF;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      transition: all 0.3s ease;
+    }
+    
+    .form-group select:focus {
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+    
+    .form-group select option {
+      background: #1a1a1a;
+      color: #FFFFFF;
+    }
+    
+    .analyze-btn {
+      width: 100%;
+      padding: 15px 25px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .analyze-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    .analyze-btn:active {
+      transform: translateY(0);
+    }
+    
+    .analyze-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .btn-loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid #FFFFFF;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Completely static planets for Find Exoplanets page */
+    .solar-system {
+      animation: none !important;
+    }
+    
+    .solar-system .orbit {
+      animation: none !important;
+      transform: none !important;
+    }
+    
+    .solar-system .planet {
+      animation: none !important;
+      transform: none !important;
+    }
+    
+    .solar-system .sun {
+      animation: none !important;
+    }
+    
+    .results-section {
+      margin-top: 40px;
+      padding: 25px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      animation: slideInUp 0.6s ease-out;
+    }
+    
+    .results-section h3 {
+      color: #FFFFFF;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-align: center;
+      background: linear-gradient(45deg, #FFFFFF, #E0E0E0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Responsive Grid Layout for Results */
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      .analysis-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .analysis-card {
+      margin-bottom: 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      border-left: 4px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .analysis-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0.12);
+    }
+    
+    .analysis-card h4 {
+      color: #FFFFFF;
+      margin-bottom: 12px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .analysis-card p {
+      color: #E0E0E0;
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+    
+    .analysis-card p strong {
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+    
+    .habitability {
+      background: linear-gradient(135deg, rgba(0, 150, 0, 0.25), rgba(0, 100, 0, 0.15));
+      border-left-color: #00FF00;
+      box-shadow: 0 4px 15px rgba(0, 150, 0, 0.2);
+    }
+    
+    .habitability:hover {
+      background: linear-gradient(135deg, rgba(0, 150, 0, 0.35), rgba(0, 100, 0, 0.25));
+      box-shadow: 0 6px 20px rgba(0, 150, 0, 0.3);
+    }
+    
+    .ml-prediction {
+      background: linear-gradient(135deg, rgba(0, 100, 200, 0.25), rgba(0, 50, 150, 0.15));
+      border-left-color: #0088FF;
+      box-shadow: 0 4px 15px rgba(0, 100, 200, 0.2);
+    }
+    
+    .ml-prediction:hover {
+      background: linear-gradient(135deg, rgba(0, 100, 200, 0.35), rgba(0, 50, 150, 0.25));
+      box-shadow: 0 6px 20px rgba(0, 100, 200, 0.3);
+    }
+    
+    .probabilities {
+      margin-top: 15px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .probabilities h5 {
+      color: #FFFFFF;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    
+    .prob-item {
+      color: #E0E0E0;
+      margin: 6px 0;
+      font-size: 0.9rem;
+      padding: 4px 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .prob-item:last-child {
+      margin-bottom: 0;
+    }
+    
+    .score-bar {
+      position: relative;
+      background: rgba(255, 255, 255, 0.1);
+      height: 35px;
+      border-radius: 18px;
+      overflow: hidden;
+      margin-top: 15px;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .score-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FF4444, #FFAA00, #00FF00);
+      transition: width 1.5s ease;
+      border-radius: 18px;
+    }
+    
+    .score-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #FFFFFF;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+    }
+  </style>
+{% endblock %}
