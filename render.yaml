@@ -3,7 +3,7 @@ services:
     name: exoseek-flask-app
     env: python
     plan: free
-    pythonVersion: "3.11"
+    pythonVersion: "3.11.10"
     buildCommand: pip install --upgrade pip setuptools wheel && pip install --no-cache-dir -r requirements.txt
     startCommand: gunicorn --bind 0.0.0.0:$PORT app:app
     envVars:
