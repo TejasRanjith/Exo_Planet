@@ -979,3 +979,437 @@ body::after {
   color: #C0C0C0;
   font-weight: 300;
 }
+
+/* ========================================
+   MOBILE RESPONSIVE DESIGN
+   ======================================== */
+
+/* Mobile-first responsive breakpoints */
+@media (max-width: 1200px) {
+  .main-container {
+    padding: 120px 40px 80px 40px;
+  }
+  
+  .main-title {
+    font-size: 6rem;
+  }
+  
+  .solar-system {
+    width: 400px;
+    height: 400px;
+  }
+  
+  .orbit4 { 
+    width: 350px; 
+    height: 350px; 
+  }
+  
+  .orbit3 { 
+    width: 280px; 
+    height: 280px; 
+  }
+  
+  .orbit2 { 
+    width: 200px; 
+    height: 200px; 
+  }
+  
+  .orbit1 { 
+    width: 150px; 
+    height: 150px; 
+  }
+}
+
+@media (max-width: 768px) {
+  /* Header adjustments */
+  .site-header {
+    padding: 15px 20px;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .main-heading {
+    font-size: 1.5rem;
+  }
+  
+  .nav-menu ul {
+    gap: 15px;
+  }
+  
+  .nav-menu a {
+    font-size: 1.1rem;
+    padding: 10px 14px;
+  }
+  
+  /* Main content adjustments */
+  .main-container {
+    padding: 100px 20px 60px 20px;
+  }
+  
+  .main-title {
+    font-size: 4rem;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+  
+  .main-tagline {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+  }
+  
+  /* Statistics section mobile */
+  .statistics-section {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 40px;
+    align-items: center;
+  }
+  
+  .stat-card {
+    min-width: 280px;
+    padding: 20px;
+  }
+  
+  .stat-number {
+    font-size: 2.2rem;
+  }
+  
+  .stat-label {
+    font-size: 0.95rem;
+  }
+  
+  /* Solar system mobile */
+  .solar-system {
+    width: 300px;
+    height: 300px;
+    opacity: 0.4;
+  }
+  
+  .sun {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .sun::before {
+    width: 140px;
+    height: 140px;
+    top: -20px;
+    left: -20px;
+  }
+  
+  .sun::after {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .orbit4 { 
+    width: 280px; 
+    height: 280px; 
+  }
+  
+  .orbit3 { 
+    width: 220px; 
+    height: 220px; 
+  }
+  
+  .orbit2 { 
+    width: 160px; 
+    height: 160px; 
+  }
+  
+  .orbit1 { 
+    width: 120px; 
+    height: 120px; 
+  }
+  
+  /* Planet size adjustments */
+  .mercury { 
+    width: 16px;
+    height: 16px;
+  }
+  
+  .venus { 
+    width: 22px;
+    height: 22px;
+  }
+  
+  .earth { 
+    width: 26px;
+    height: 26px;
+  }
+  
+  .mars { 
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Popup mobile adjustments */
+  .popup-content {
+    margin: 20px;
+    padding: 30px;
+    max-height: 90vh;
+    border-radius: 20px;
+  }
+  
+  .popup-header h2 {
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+  }
+  
+  .animated-planets {
+    gap: 20px;
+  }
+  
+  .exoplanet {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .popup-body p {
+    font-size: 1rem;
+  }
+  
+  .info-section {
+    padding: 20px;
+  }
+  
+  .info-section h3 {
+    font-size: 1.2rem;
+  }
+  
+  /* Close button mobile */
+  .close-button-container {
+    top: 80px;
+    right: 20px;
+  }
+  
+  .close-button-container .close-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small mobile devices */
+  .site-header {
+    padding: 12px 15px;
+    gap: 20px;
+  }
+  
+  .main-heading {
+    font-size: 1.3rem;
+  }
+  
+  .nav-menu ul {
+    gap: 10px;
+  }
+  
+  .nav-menu a {
+    font-size: 1rem;
+    padding: 8px 12px;
+  }
+  
+  .main-container {
+    padding: 90px 15px 50px 15px;
+  }
+  
+  .main-title {
+    font-size: 3rem;
+    letter-spacing: 1px;
+  }
+  
+  .main-tagline {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+  }
+  
+  .stat-card {
+    min-width: 260px;
+    padding: 15px;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .stat-label {
+    font-size: 0.9rem;
+  }
+  
+  .solar-system {
+    width: 250px;
+    height: 250px;
+    opacity: 0.3;
+  }
+  
+  .sun {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .sun::before {
+    width: 100px;
+    height: 100px;
+    top: -15px;
+    left: -15px;
+  }
+  
+  .sun::after {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .orbit4 { 
+    width: 230px; 
+    height: 230px; 
+  }
+  
+  .orbit3 { 
+    width: 180px; 
+    height: 180px; 
+  }
+  
+  .orbit2 { 
+    width: 130px; 
+    height: 130px; 
+  }
+  
+  .orbit1 { 
+    width: 100px; 
+    height: 100px; 
+  }
+  
+  .mercury { 
+    width: 14px;
+    height: 14px;
+  }
+  
+  .venus { 
+    width: 18px;
+    height: 18px;
+  }
+  
+  .earth { 
+    width: 22px;
+    height: 22px;
+  }
+  
+  .mars { 
+    width: 16px;
+    height: 16px;
+  }
+  
+  .popup-content {
+    margin: 15px;
+    padding: 25px;
+    border-radius: 15px;
+  }
+  
+  .popup-header h2 {
+    font-size: 2rem;
+    letter-spacing: 1px;
+  }
+  
+  .animated-planets {
+    gap: 15px;
+  }
+  
+  .exoplanet {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .close-button-container {
+    top: 70px;
+    right: 15px;
+  }
+  
+  .close-button-container .close-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.3rem;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+  .main-container {
+    padding: 80px 20px 40px 20px;
+  }
+  
+  .main-title {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .main-tagline {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+  }
+  
+  .statistics-section {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+  }
+  
+  .stat-card {
+    min-width: 200px;
+    padding: 15px;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+  
+  .stat-label {
+    font-size: 0.85rem;
+  }
+  
+  .solar-system {
+    width: 250px;
+    height: 250px;
+    opacity: 0.3;
+  }
+}
+
+/* Touch-friendly interactions */
+@media (hover: none) and (pointer: coarse) {
+  .nav-menu a:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .stat-card:hover {
+    transform: none;
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  
+  .close-button-container .close-btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .info-section:hover {
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 3px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .sun {
+    filter: blur(0.1px);
+  }
+  
+  .planet {
+    box-shadow: 
+      inset -4px -4px 10px rgba(0, 0, 0, 0.5),
+      0 0 8px rgba(255, 255, 255, 0.1);
+  }
+}
