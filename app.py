@@ -414,11 +414,13 @@ def predict_kepler(data):
             max_prob = 0.80
             probabilities = [0.80 if cls == 'CONFIRMED' else 0.10 for cls in label_encoders['kepler'].classes_]
         
-        # False positive heuristics
-        elif (planet_radius < 0.3 or 
-              equilibrium_temp > 1500 or 
-              insolation_flux > 200 or
-              transit_depth < 0.00001):
+        # False positive heuristics (more sensitive detection)
+        elif (planet_radius < 1.0 or 
+              equilibrium_temp > 800 or 
+              insolation_flux > 10 or
+              transit_depth < 0.0005 or
+              (planet_radius < 1.5 and equilibrium_temp > 500) or
+              (transit_depth < 0.0002 and planet_radius < 1.2)):
             predicted_label = 'FALSE POSITIVE'
             max_prob = 0.80
             probabilities = [0.80 if cls == 'FALSE POSITIVE' else 0.10 for cls in label_encoders['kepler'].classes_]
