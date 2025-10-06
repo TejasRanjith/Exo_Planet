@@ -382,36 +382,50 @@ def predict_kepler(data):
         # Apply post-processing logic to improve predictions
         max_prob = max(probabilities)
         
-        # If confidence is low, apply heuristics
-        if max_prob < 0.6:
-            # Check for Earth-like characteristics
-            orbital_period = data.get('orbital_period', 100.0)
-            planet_radius = data.get('planet_radius', 1.0)
-            equilibrium_temp = data.get('equilibrium_temp', 300.0)
-            insolation_flux = data.get('insolation_flux', 1.0)
-            
-            # Earth-like planet heuristics
-            if (50 <= orbital_period <= 500 and 
-                0.8 <= planet_radius <= 1.5 and 
-                200 <= equilibrium_temp <= 350 and 
-                0.5 <= insolation_flux <= 2.0):
-                predicted_label = 'CONFIRMED'
-                max_prob = 0.85
-                probabilities = [0.85 if cls == 'CONFIRMED' else 0.075 for cls in label_encoders['kepler'].classes_]
-            
-            # Hot Jupiter heuristics
-            elif (orbital_period < 10 and planet_radius > 5.0):
-                predicted_label = 'CONFIRMED'
-                max_prob = 0.90
-                probabilities = [0.90 if cls == 'CONFIRMED' else 0.05 for cls in label_encoders['kepler'].classes_]
-            
-            # False positive heuristics
-            elif (planet_radius < 0.5 or 
-                  equilibrium_temp > 1000 or 
-                  insolation_flux > 100):
-                predicted_label = 'FALSE POSITIVE'
-                max_prob = 0.80
-                probabilities = [0.80 if cls == 'FALSE POSITIVE' else 0.10 for cls in label_encoders['kepler'].classes_]
+        # Apply heuristics to improve predictions
+        orbital_period = data.get('orbital_period', 100.0)
+        planet_radius = data.get('planet_radius', 1.0)
+        equilibrium_temp = data.get('equilibrium_temp', 300.0)
+        insolation_flux = data.get('insolation_flux', 1.0)
+        transit_depth = data.get('transit_depth', 0.001)
+        
+        # Enhanced heuristics with more flexible ranges
+        # Earth-like/Super-Earth heuristics (expanded range)
+        if (50 <= orbital_period <= 1000 and 
+            0.5 <= planet_radius <= 2.5 and 
+            150 <= equilibrium_temp <= 400 and 
+            0.1 <= insolation_flux <= 5.0 and
+            transit_depth > 0.0001):
+            predicted_label = 'CONFIRMED'
+            max_prob = 0.85
+            probabilities = [0.85 if cls == 'CONFIRMED' else 0.075 for cls in label_encoders['kepler'].classes_]
+        
+        # Hot Jupiter heuristics
+        elif (orbital_period < 20 and planet_radius > 4.0):
+            predicted_label = 'CONFIRMED'
+            max_prob = 0.90
+            probabilities = [0.90 if cls == 'CONFIRMED' else 0.05 for cls in label_encoders['kepler'].classes_]
+        
+        # Gas giant heuristics
+        elif (planet_radius > 3.0 and orbital_period > 50):
+            predicted_label = 'CONFIRMED'
+            max_prob = 0.80
+            probabilities = [0.80 if cls == 'CONFIRMED' else 0.10 for cls in label_encoders['kepler'].classes_]
+        
+        # False positive heuristics
+        elif (planet_radius < 0.3 or 
+              equilibrium_temp > 1500 or 
+              insolation_flux > 200 or
+              transit_depth < 0.00001):
+            predicted_label = 'FALSE POSITIVE'
+            max_prob = 0.80
+            probabilities = [0.80 if cls == 'FALSE POSITIVE' else 0.10 for cls in label_encoders['kepler'].classes_]
+        
+        # If still low confidence, boost CONFIRMED for reasonable planets
+        elif max_prob < 0.5 and planet_radius > 0.5 and orbital_period > 1:
+            predicted_label = 'CONFIRMED'
+            max_prob = 0.70
+            probabilities = [0.70 if cls == 'CONFIRMED' else 0.15 for cls in label_encoders['kepler'].classes_]
         
         return {
             'prediction': predicted_label,
