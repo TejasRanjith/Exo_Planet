@@ -235,6 +235,8 @@ def find_exoplanets():
     """Find Exoplanets page route"""
     return render_template('find_exoplanets.html')
 
+# Force deployment update - v2.1 with improved heuristics
+
 @app.route('/api/analyze_exoplanet', methods=['POST'])
 def analyze_exoplanet():
     """API endpoint for exoplanet analysis with ML models"""
